@@ -35,6 +35,16 @@ function Canvas(cid){ //cid is the id of a <canvas>
         ctx.lineTo(points[i].getX(),points[i].getY());
       }
     }
+    ctx.strokeStyle = color;
+    ctx.stroke();
+  }
+  function draw_image(x,y,img,color){
+    if(color == undefined){
+      color = "white";
+    }
+    ctx.strokeStyle = color;
+    ctx.drawImage(img,x,y);
+    ctx.stroke();
   }
   this.draw_rect = draw_rect;
   this.draw_square = draw_square;
@@ -42,7 +52,9 @@ function Canvas(cid){ //cid is the id of a <canvas>
   this.draw_circle = draw_circle;
   this.draw_line = draw_line;
   this.draw_shape = draw_shape;
+  this.draw_image = draw_image;
 }
+//Class for sprites
 function Sprite(data){ 
   var drawdata;
   var datatype;
@@ -58,11 +70,18 @@ function Sprite(data){
   }else{
     throw new TypeError("Invalid data type for Sprite data.");
   }
+  function draw(canv,x,y){
+    if(datatype == "ImageSrc"){
+      canv.draw_image(new Image(drawdata),x,y);
+    }
+  }
 }
-function Image(source){
+
+function GraphiClickImage(source){
   this.src = source;
   this.type = "GraphiClick_Image";
 }
+
 function Shape(){
   var points = [];
   function addPoint(pnt){
@@ -77,7 +96,9 @@ function Shape(){
   this.addPoint = addPoint;
   this.removeLastPoint = removeLastPoint;
   this.getPoints = getPoints;
+  this.type = "GraphiClick_Shape";
 }
+
 function Point(x_val,y_val){
   var x = x_val;
   var y = y_val;
