@@ -1,5 +1,5 @@
 function Canvas(cid){ //cid is the id of a <canvas>
-  var cnvs = document.getElementById(cid);
+  var cnvs = document.getElementById(cid) || document.createElement('canvas');
   var ctx = cnvs.getContext('2d');
   function draw_rect(x,y,w,h,color){
     ctx.drawRect(x,y,w,h);
